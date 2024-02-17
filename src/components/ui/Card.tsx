@@ -5,10 +5,10 @@ import { RxCross2 } from "react-icons/rx";
 
 interface Props {
   name: string;
-  memo: string;
-  amount: number;
-  isDynamic: boolean;
-  isComplete: boolean;
+  memo?: string;
+  amount?: number;
+  isDynamic?: boolean;
+  isComplete?: boolean;
   handleClick: () => void;
 }
 
@@ -26,11 +26,11 @@ export const Card: FC<Props> = (props) => {
       </div>
 
       <div>
-        <p className="text-gray my-2">{memo}</p>
+        <p className="text-gray my-2">{memo ? memo : ""}</p>
       </div>
 
       <div className="text-primary text-lg font-semibold flex justify-end items-center">
-        {amount}
+        {amount ? amount : ""}
         {isDynamic ? (
           <div className="text-primary flex items-center">
             <RxCross2 size={18} className="text-primary" />
