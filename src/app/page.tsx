@@ -1,19 +1,24 @@
 "use client";
 
-import { Card } from "@/components/ui/Card";
-import { CheckLabel } from "@/components/ui/CheckLabel";
-import { useToggle } from "@/hooks/useToggle";
+import { HomePage } from "@/components/HomePage";
+import { ListPage } from "@/components/ListPage";
+import { MotoPage } from "@/components/MotoPage";
+import { usePageState } from "@/hooks/usePageState";
 
 export default function Home() {
-  return (
-    <>
-      <div className="space-y-2 flex flex-col justify-center mt-5 border-2 border-blue-400">
-        <Card
-          name="テスト"
-          memo="ここにメモが入ります"
-          handleClick={() => console.log("hello")}
-        />
-      </div>
-    </>
-  );
+	const pageStateHooks = usePageState(1)
+
+	if(pageStateHooks.pageId===1){
+		return <HomePage pageStateHooks={pageStateHooks}/>
+	}else if(pageStateHooks.pageId ===2){
+		return <MotoPage pageStateHooks={pageStateHooks}/>
+	}else if(pageStateHooks.pageId ===3){
+		return <ListPage pageStateHooks={pageStateHooks}/>
+	}
+	else{
+		return <div>not found</div>
+	}
+
+	
+
 }
