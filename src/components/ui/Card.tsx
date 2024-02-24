@@ -2,6 +2,8 @@ import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { AiFillHome } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
+import { ToggleHooks, useToggle } from "@/hooks/useToggle";
+import { Button } from "./Button";
 
 interface Props {
   name: string;
@@ -9,13 +11,16 @@ interface Props {
   amount?: number;
   isDynamic?: boolean;
   isComplete?: boolean;
-  handleClick: () => void;
+	handleClick: () => void
 }
 
 export const Card: FC<Props> = (props) => {
   const { name, memo, amount, isComplete, isDynamic, handleClick } = props;
   return (
-    <div className="p-1 drop-shadow-lg bg-white" onClick={handleClick}>
+    <div
+      className="z-0 relative p-1 drop-shadow-lg bg-white"
+      onClick={handleClick}
+    >
       <div className="flex items-center">
         {isComplete ? (
           <FaCheckCircle size={24} className="text-primary mr-2" />

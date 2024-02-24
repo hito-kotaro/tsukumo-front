@@ -4,6 +4,7 @@ export interface CounterHooks {
   value: number;
   handleAdd: () => void;
   handleMinus: () => void;
+  clearValue: () => void;
 }
 
 export const useCounter = (defaultValue: number) => {
@@ -20,5 +21,9 @@ export const useCounter = (defaultValue: number) => {
     }
   };
 
-  return { value, handleAdd, handleMinus };
+  const clearValue = () => {
+    setValue(0);
+  };
+
+  return { value, handleAdd, handleMinus, clearValue };
 };

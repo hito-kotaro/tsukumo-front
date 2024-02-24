@@ -3,6 +3,8 @@ import { useState } from "react";
 export interface ToggleHooks {
   isTrue: boolean;
   handleToggle: () => void;
+  setTrue: () => void;
+  setFalse: () => void;
 }
 
 export const useToggle = (defaultValue: boolean) => {
@@ -12,5 +14,12 @@ export const useToggle = (defaultValue: boolean) => {
     setIsTrue((prevState) => !prevState);
   };
 
-  return { isTrue, handleToggle };
+  const setTrue = () => {
+    setIsTrue(true);
+  };
+  const setFalse = () => {
+    setIsTrue(false);
+  };
+
+  return { isTrue, handleToggle, setTrue, setFalse };
 };
