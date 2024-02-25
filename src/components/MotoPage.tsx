@@ -1,5 +1,5 @@
 import { PageStateHooks } from "@/hooks/usePageState";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { TextBox } from "./ui/TextBox";
 import { useInputText } from "@/hooks/useInputText";
 import { TextArea } from "./ui/TextArea";
@@ -8,11 +8,10 @@ import { Counter } from "./ui/Counter";
 import { CheckLabel } from "./ui/CheckLabel";
 import { useToggle } from "@/hooks/useToggle";
 import { Item } from "@/types/types";
-import { useItem } from "@/hooks/useItem";
+import { useItemList } from "@/hooks/useItemList";
 import { useLocalStrage } from "@/hooks/useLocalStorage";
 import { Card } from "./ui/Card";
 import { Button } from "@mui/material";
-import { warn } from "console";
 
 interface Props {
   pageStateHooks: PageStateHooks;
@@ -22,7 +21,7 @@ export const MotoPage: FC<Props> = (props) => {
   const { pageStateHooks } = props;
   const { toHome } = pageStateHooks;
   const listNameHooks = useInputText("");
-  const itemListHooks = useItem();
+  const itemListHooks = useItemList();
   const itemNameHooks = useInputText("");
   const itemMemoHooks = useInputText("");
   const counterHooks = useCounter(1);

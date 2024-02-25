@@ -1,21 +1,17 @@
-import { Item } from "@/types/types";
+import { LocalStItem } from "@/types/types";
 import { useState } from "react";
 
-export const useItem = () => {
-  const [items, setItems] = useState<Item[]>([]);
+export interface ItemHooks {
+  item: LocalStItem | undefined;
+  selectItem: (i: LocalStItem) => void;
+}
 
-  const addItem = (item: Item) => {
-    const newItems = [...items, item];
-    setItems(newItems);
-		console.log(newItems)
+export const useItem = () => {
+  const [item, setItem] = useState<LocalStItem>();
+
+  const selectItem = (i: LocalStItem) => {
+    setItem(i);
   };
 
-  const removeItem = (id: number) => {
-		const newItems = items.filter((i:Item)=>{
-			return i.id !== id
-		})
-		setItems(newItems)
-	};
-
-  return { items, addItem, removeItem };
+  return { item, selectItem };
 };

@@ -7,8 +7,13 @@ export interface Item {
 }
 
 export interface List {
-	id: number;
-	name: string;
-	memo?: string;
+  id: number;
+  name: string;
+  memo?: string;
 }
 
+export interface LocalStItem {
+  id: number;
+  name: string;
+  items: Item[];
+}
