@@ -17,3 +17,18 @@ export interface LocalStItem {
   name: string;
   items: Item[];
 }
+
+export interface MotoItem {
+  id: number;
+  name: string;
+  memo: string;
+  dynamic: boolean;
+  amount: number;
+}
+
+// localStorageに格納されるのは、MotoListの配列MotoList[]
+export interface MotoList {
+  id: number;
+  name: string;
+  items: MotoItem[];
+}

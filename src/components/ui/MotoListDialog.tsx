@@ -1,34 +1,62 @@
 import { LocalStItem } from "@/types/types";
 import { Button, Dialog, Divider } from "@mui/material";
-import { FC, useContext } from "react";
+import { FC, useEffect } from "react";
 import { Counter } from "./Counter";
-import { CounterHooks, useCounter } from "@/hooks/useCounter";
+import { CounterHooks } from "@/hooks/useCounter";
 import { PageStateHooks } from "@/hooks/usePageState";
-import { useLocalStrage } from "@/hooks/useLocalStorage";
+import { TextBox } from "./TextBox";
+import { InputTextHooks } from "@/hooks/useInputText";
+import { useMotoLists } from "@/hooks/useMotoLists";
 interface Props {
   open: boolean;
   handleClose: () => void;
   pageStateHooks: PageStateHooks;
   dialogCounterHooks: CounterHooks;
   motoList: LocalStItem | undefined;
+  listNameInputHooks: InputTextHooks;
 }
 
-export const MotoListItemDialog: FC<Props> = (props) => {
-  const { open, handleClose, motoList, pageStateHooks, dialogCounterHooks } =
-    props;
-  const { removeMotoList } = useLocalStrage();
+export const MotoListDialog: FC<Props> = (props) => {
+  const {
+    open,
+    handleClose,
+    motoList,
+    pageStateHooks,
+    dialogCounterHooks,
+    listNameInputHooks,
+  } = props;
+
+  const { removeMotoList } = useMotoLists();
+
+  useEffect(() => {
+    listNameInputHooks.clearValue();
+  }, []);
 
   return (
     <Dialog open={open} onClose={handleClose} className="">
       <div className="p-5">
         <h3 className="text-center text-primary">{motoList?.name}</h3>
-        <h4 className="text-primary">宿泊日数を設定してリストを作成</h4>
+        <h4 className="text-primary">宿泊数と名前を設定してリストを作成</h4>
+        <div>
+          <TextBox
+            inputHooks={listNameInputHooks}
+            placeholder="もちものリストの名前を入力"
+            size="small"
+          />
+        </div>
         <div className="text-primary flex items-center justify-around">
           <h3>宿泊日数:</h3>
           <Counter counterHooks={dialogCounterHooks} />
         </div>
         <div>
-          <Button variant="contained" color="green" fullWidth>
+          <Button
+            variant="contained"
+            color="green"
+            fullWidth
+            onClick={() => {
+              pageStateHooks.toList();
+            }}
+          >
             作成
           </Button>
         </div>

@@ -1,26 +1,24 @@
+import { useToggle } from "@/hooks/useToggle";
 import { FC } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import { AiFillHome } from "react-icons/ai";
-import { RxCross2 } from "react-icons/rx";
 
 interface Props {
   name: string;
   memo?: string;
-  amount?: number;
-  isDynamic?: boolean;
-  isComplete?: boolean;
-  handleClick: () => void;
+  amount: number;
 }
 
-export const Card: FC<Props> = (props) => {
-  const { name, memo, amount, isComplete, isDynamic, handleClick } = props;
+export const ListCard: FC<Props> = (props) => {
+  const { name, memo, amount } = props;
+  const checkedHooks = useToggle(false);
+
   return (
     <div
       className="z-0 relative p-1 drop-shadow-lg bg-white"
-      onClick={handleClick}
+      onClick={checkedHooks.handleToggle}
     >
       <div className="flex items-center">
-        {isComplete ? (
+        {checkedHooks.isTrue ? (
           <FaCheckCircle size={24} className="text-primary mr-2" />
         ) : (
           ""
@@ -34,14 +32,6 @@ export const Card: FC<Props> = (props) => {
 
       <div className="text-primary text-lg font-semibold flex justify-end items-center">
         {amount ? amount : ""}
-        {isDynamic ? (
-          <div className="text-primary flex items-center">
-            <RxCross2 size={18} className="text-primary" />
-            <AiFillHome size={24} className="text-primary" />
-          </div>
-        ) : (
-          ""
-        )}
       </div>
     </div>
   );
