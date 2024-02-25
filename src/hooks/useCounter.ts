@@ -16,13 +16,13 @@ export const useCounter = (defaultValue: number) => {
     }
   };
   const handleMinus = () => {
-    if (value > 0) {
+    if (value > 1) {
       setValue(value - 1);
     }
   };
 
   const clearValue = () => {
-    setValue(0);
+    setValue(defaultValue);
   };
 
   return { value, handleAdd, handleMinus, clearValue };

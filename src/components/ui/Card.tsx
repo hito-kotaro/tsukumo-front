@@ -11,7 +11,7 @@ interface Props {
   amount?: number;
   isDynamic?: boolean;
   isComplete?: boolean;
-	handleClick: () => void
+  handleClick: () => void;
 }
 
 export const Card: FC<Props> = (props) => {
