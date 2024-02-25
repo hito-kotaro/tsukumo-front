@@ -1,8 +1,8 @@
 import { Item } from "@/types/types";
 import { useState } from "react";
 
-export const useItemList = () => {
-  const [items, setItems] = useState<Item[]>([]);
+export const useItemList = (defaultList: Item[]) => {
+  const [items, setItems] = useState<Item[]>(defaultList);
 
   const addItem = (item: Item) => {
     const newItems = [...items, item];

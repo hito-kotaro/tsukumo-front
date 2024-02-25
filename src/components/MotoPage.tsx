@@ -7,7 +7,7 @@ import { useCounter } from "@/hooks/useCounter";
 import { Counter } from "./ui/Counter";
 import { CheckLabel } from "./ui/CheckLabel";
 import { useToggle } from "@/hooks/useToggle";
-import { Item } from "@/types/types";
+import { Item, LocalStItem } from "@/types/types";
 import { useItemList } from "@/hooks/useItemList";
 import { useLocalStrage } from "@/hooks/useLocalStorage";
 import { Card } from "./ui/Card";
@@ -15,13 +15,14 @@ import { Button } from "@mui/material";
 
 interface Props {
   pageStateHooks: PageStateHooks;
+  curList?: LocalStItem;
 }
 
 export const MotoPage: FC<Props> = (props) => {
-  const { pageStateHooks } = props;
+  const { pageStateHooks, curList } = props;
   const { toHome } = pageStateHooks;
-  const listNameHooks = useInputText("");
-  const itemListHooks = useItemList();
+  const listNameHooks = useInputText(curList?.name ? curList.name : "");
+  const itemListHooks = useItemList(curList?.items ? curList.items : []);
   const itemNameHooks = useInputText("");
   const itemMemoHooks = useInputText("");
   const counterHooks = useCounter(1);
@@ -53,10 +54,11 @@ export const MotoPage: FC<Props> = (props) => {
   return (
     <div className="px-3">
       <Button variant="text" size="large" color="green" onClick={toHome}>
-        もどる
+        ホームにもどる
       </Button>
+
       {/* リストのモトの名前入力*/}
-      <h3 className="text-primary text-center">新しいリストのモトを作成</h3>
+      <h3 className="text-primary text-center">{`${curList?.id ? "リストのモトを更新" : "新しいリストのモトを作成"}`}</h3>
 
       <div className="space-y-2">
         <Button
@@ -66,14 +68,23 @@ export const MotoPage: FC<Props> = (props) => {
           color="green"
           fullWidth
           onClick={() => {
-            localStorageHooks.createMotoList(
-              listNameHooks.value,
-              itemListHooks.items,
-            );
+            if (curList) {
+              const newMotoList: LocalStItem = {
+                id: curList.id,
+                name: listNameHooks.value,
+                items: itemListHooks.items,
+              };
+              localStorageHooks.updateMotoList(curList.id, newMotoList);
+            } else {
+              localStorageHooks.createMotoList(
+                listNameHooks.value,
+                itemListHooks.items,
+              );
+            }
             toHome();
           }}
         >
-          リストのモトを保存してホームに戻る
+          {`${curList?.id ? "リストのモトを更新してもどる" : "リストのモトを保存してもどる"}`}
         </Button>
 
         <TextBox
@@ -134,7 +145,7 @@ export const MotoPage: FC<Props> = (props) => {
               memo={i.memo}
               amount={i.amount}
               isDynamic={i.dynamic}
-              handleClick={() => console.log("remove")}
+              handleClick={() => itemListHooks.removeItem(i.id)}
             />
           );
         })}

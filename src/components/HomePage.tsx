@@ -8,14 +8,16 @@ import { LocalStItem } from "@/types/types";
 import { useLocalStrage } from "@/hooks/useLocalStorage";
 import { MotoListItemDialog } from "./ui/MotoListItemDialog";
 import { ItemHooks } from "@/hooks/useItem";
+import { CounterHooks } from "@/hooks/useCounter";
 
 interface Props {
   pageStateHooks: PageStateHooks;
   itemHooks: ItemHooks;
+  dialogCounterHooks: CounterHooks;
 }
 
 export const HomePage: FC<Props> = (props) => {
-  const { pageStateHooks, itemHooks } = props;
+  const { pageStateHooks, itemHooks, dialogCounterHooks } = props;
   const { toMoto } = pageStateHooks;
   const { motoList, getMotoList } = useLocalStrage();
   const switchToggleHooks = useToggle(true);
@@ -26,6 +28,8 @@ export const HomePage: FC<Props> = (props) => {
       <MotoListItemDialog
         open={dialogHooks.isTrue}
         handleClose={dialogHooks.setFalse}
+        pageStateHooks={pageStateHooks}
+        dialogCounterHooks={dialogCounterHooks}
         motoList={itemHooks.item}
       />
       <Switch
@@ -40,7 +44,10 @@ export const HomePage: FC<Props> = (props) => {
             fullWidth
             color="green"
             size="large"
-            onClick={toMoto}
+            onClick={() => {
+              itemHooks.clearItem();
+              toMoto();
+            }}
           >
             新しいリストのモトを作成
           </Button>

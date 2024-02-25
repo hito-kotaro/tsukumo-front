@@ -4,6 +4,7 @@ import { useState } from "react";
 export interface ItemHooks {
   item: LocalStItem | undefined;
   selectItem: (i: LocalStItem) => void;
+  clearItem: () => void;
 }
 
 export const useItem = () => {
@@ -13,5 +14,9 @@ export const useItem = () => {
     setItem(i);
   };
 
-  return { item, selectItem };
+  const clearItem = () => {
+    setItem(undefined);
+  };
+
+  return { item, selectItem, clearItem };
 };
